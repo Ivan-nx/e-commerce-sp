@@ -1,18 +1,22 @@
 import { createContext, ReactNode, useState } from 'react'
-import { SnackData } from '../interfaces/SnackData'
 import { toast } from 'react-toastify'
+
+import { SnackData } from '../interfaces/SnackData'
+
 import { snackEmoji } from '../helpers/snackEmoji'
+
 interface Snack extends SnackData {
   quantity: number
   subtotal: number
 }
+
 interface CartContextProps {
   cart: Snack[]
   addSnackIntoCart: (snack: SnackData) => void
   removeSnackFromCart: (snack: Snack) => void
   snackCartIncrement: (snack: Snack) => void
-  snackCartDencrement: (snack: Snack) => void
-  confirmeOrder: (snack: Snack) => void
+  snackCartDecrement: (snack: Snack) => void
+  confirmOrder: () => void
 }
 
 interface CartProviderProps {
@@ -25,12 +29,10 @@ export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Snack[]>([])
 
   function addSnackIntoCart(snack: SnackData): void {
-    // buscar
     const snackExistentInCart = cart.find(
       (item) => item.snack === snack.snack && item.id === snack.id,
     )
 
-    // atualizar
     if (snackExistentInCart) {
       const newCart = cart.map((item) => {
         if (item.id === snack.id) {
@@ -49,7 +51,6 @@ export function CartProvider({ children }: CartProviderProps) {
       return
     }
 
-    // adicionar
     const newSnack = { ...snack, quantity: 1, subtotal: snack.price }
     const newCart = [...cart, newSnack] // push de um array
 
@@ -57,12 +58,19 @@ export function CartProvider({ children }: CartProviderProps) {
     setCart(newCart)
   }
 
-  function upDateSnackQuantity(snack: Snack, newQuantity: number) {
-    if (newQuantity === 0) return
+  function removeSnackFromCart(snack: Snack) {
+    const newCart = cart.filter((item) => !(item.id === snack.id && item.snack === snack.snack))
+
+    setCart(newCart)
+  }
+
+  function updateSnackQuantity(snack: Snack, newQuantity: number) {
+    if (newQuantity <= 0) return
 
     const snackExistentInCart = cart.find(
       (item) => item.id === snack.id && item.snack === snack.snack,
     )
+
     if (!snackExistentInCart) return
 
     const newCart = cart.map((item) => {
@@ -73,26 +81,23 @@ export function CartProvider({ children }: CartProviderProps) {
           subtotal: item.price * newQuantity,
         }
       }
+
       return item
     })
-    setCart(newCart)
-  }
 
-  function removeSnackFromCart(snack: Snack) {
-    const newCart = cart.filter((item) => !(item.id === snack.id && item.snack === snack.snack))
     setCart(newCart)
   }
 
   function snackCartIncrement(snack: Snack) {
-    upDateSnackQuantity(snack, snack.quantity + 1)
+    updateSnackQuantity(snack, snack.quantity + 1)
   }
 
-  function snackCartDencrement(snack: Snack) {
-    upDateSnackQuantity(snack, snack.quantity - 1)
+  function snackCartDecrement(snack: Snack) {
+    updateSnackQuantity(snack, snack.quantity - 1)
   }
 
-  function confirmeOrder() {
-    /*   */
+  function confirmOrder() {
+    return
   }
 
   return (
@@ -102,8 +107,8 @@ export function CartProvider({ children }: CartProviderProps) {
         addSnackIntoCart,
         removeSnackFromCart,
         snackCartIncrement,
-        snackCartDencrement,
-        confirmeOrder,
+        snackCartDecrement,
+        confirmOrder,
       }}
     >
       {children}
