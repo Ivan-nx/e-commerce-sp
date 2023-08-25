@@ -2,7 +2,7 @@ import { currencyFormat } from "../../helpers/currencyFormat";
 import { useCart } from "../../hooks/useCart"
 import { Container } from "./styles";
 
-export const ConfirmeOrder = () => {
+export const ConfirmOrder = () => {
   const { cart } = useCart();
 
   const totalAmount = cart.reduce((acc, item) => (acc += item.subtotal), 0)
