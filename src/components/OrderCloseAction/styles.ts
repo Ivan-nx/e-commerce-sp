@@ -18,13 +18,13 @@ export const Container = styled.footer`
     border-radius: 8px;
 
     font-weight: 700;
-    fonte-size: 1.25rem;
+    font-size: 1.25rem;
     text-transform: uppercase;
-    colors: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.white};
 
     transtion: background 0.3s;
 
-    &: hover {
+    &:hover {
       background: ${darken(0.1, '#AA2424')}
     }
   }

@@ -104,7 +104,7 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function payOrder() {
-    return console.log('pagamento')
+    return
   }
 
   return (
