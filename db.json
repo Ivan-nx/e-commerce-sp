@@ -13,7 +13,7 @@
       "snack": "burger",
       "name": "Extra Bacon",
       "description": "Criado para os amantes de bacon, possui em todas as suas camadas bacon bem assado e ainda queijo e carne.",
-      "price": 23.5,
+      "price": 23,
       "image": "https://i.imgur.com/B4J04AJ.jpg"
     },
     {
@@ -29,7 +29,7 @@
       "snack": "burger",
       "name": "Big Carne",
       "description": "Uma carne artesanal de primeira qualidade com 4cm de altura e uma salada completa com alface, cebola, tomate e outros.",
-      "price": 18.0,
+      "price": 18,
       "image": "https://i.imgur.com/bF8EdBb.jpg"
     },
     {
@@ -39,9 +39,16 @@
       "description": "Já pensou em comer aquele sanduíche com carne dupla e saborosa, recheada com queijo, molho e salada? Então você pensou exatamente nesse hambúrguer.",
       "price": 20,
       "image": "https://i.imgur.com/fdEY2kY.jpg"
+    },
+    {
+      "id": 6,
+      "snack": "burger",
+      "name": "Egg 2xBacon",
+      "description": "Criado para os amantes de bacon, possui em todas as suas camadas bacon bem assado e ainda queijo e carne.",
+      "price": 23.5,
+      "image": "https://i.imgur.com/B4J04AJ.jpg"
     }
   ],
-
   "pizzas": [
     {
       "id": 1,
@@ -96,7 +103,7 @@
       "snack": "pizza",
       "name": "Brigadeiro com Morango",
       "description": "Pizza doce recheada com brigadeiro e morango.",
-      "price": 35.0,
+      "price": 35,
       "image": "https://i.imgur.com/43yC2Ap.jpg"
     },
     {
@@ -116,7 +123,6 @@
       "image": "https://i.imgur.com/RahAKkH.jpg"
     }
   ],
-
   "drinks": [
     {
       "id": 1,
@@ -151,7 +157,6 @@
       "image": "https://i.imgur.com/2Lf2gHy.jpg"
     }
   ],
-
   "ice-creams": [
     {
       "id": 1,
