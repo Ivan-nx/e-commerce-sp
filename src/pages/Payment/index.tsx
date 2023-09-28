@@ -2,6 +2,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { IMaskInput } from 'react-imask'
+import IMask from 'imask'
 
 import { Head } from '../../components/Head'
 import { PayOrder } from '../../components/OrderCloseAction/PayOrder'
@@ -9,8 +10,12 @@ import { OrderHeader } from '../../components/OrderHeader'
 
 import { Container, Form, Inner } from './styles'
 import { FieldValeu, schema } from './validationSchema'
+import { useCart } from '../../hooks/useCart'
+import { CustomerData } from '../../interfaces/CustomerData'
+
 
 export default function Payment() {
+  const { payOrder } = useCart()
   const {
     control,
     handleSubmit,
@@ -18,8 +23,7 @@ export default function Payment() {
   } = useForm<FieldValeu>({
     resolver: yupResolver(schema),
   })
-  const onSubmit: SubmitHandler<FieldValeu> = (data) => console.log(data)
-
+  const onSubmit: SubmitHandler<FieldValeu> = (data) => payOrder(data as CustomerData)
   return (
     <Container>
       <Head title='Pagamento' />
@@ -34,7 +38,7 @@ export default function Payment() {
               name='fullName'
               control={control}
               render={({ field }) => (
-                <input type='text' id='fullName' autoComplete='name' {...field} />
+                <input type='text' id='fullName' autoComplete='fullName' {...field} />
               )}
             />
             {errors.fullName && <p className='error'>{errors.fullName.message}</p>}
@@ -65,7 +69,7 @@ export default function Payment() {
                   <IMaskInput
                     type='tel'
                     id='mobile'
-                    autoComplete='phone'
+                    autoComplete='mobile'
                     mask={'(00) 90000-0000'}
                     {...field}
                   />
@@ -220,12 +224,6 @@ export default function Payment() {
 
           <div className='field'>
             <label htmlFor='creditCardHolder'>Nome Impresso no Cartão</label>
-            {/*             <input
-              type='text'
-              name='credit-card-holder-name'
-              id='credit-card-holder-name'
-              autoComplete='cc-name'
-            /> */}
             <Controller
               name='creditCardHolder'
               control={control}
@@ -236,12 +234,6 @@ export default function Payment() {
 
           <div className='field'>
             <label htmlFor='creditCardNumber'>Número do Cartão</label>
-            {/*             <input
-              type='text'
-              name='credit-card-number'
-              id='credit-card-number'
-              autoComplete='cc-number'
-            /> */}
             <Controller
               name='creditCardNumber'
               control={control}
@@ -264,23 +256,39 @@ export default function Payment() {
 
           <div className='grouped'>
             <div className='field'>
-              <label htmlFor='credit-card-expiration'>Validade (MM/AA)</label>
-              <input
-                type='text'
-                name='credit-card-expiration'
-                id='credit-card-expiration'
-                autoComplete='cc-exp'
+              <label htmlFor='creditCardExpiration'>Validade (MM/AA)</label>
+              <Controller
+                name='creditCardExpiration'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput
+                    type='text'
+                    id='creditCardExpiration'
+                    mask={'00/00'}
+                    {...field}
+                  />
+                )}
               />
+
+              {errors.creditCardExpiration && <p className='error'>{errors.creditCardExpiration.message}</p>}
             </div>
 
             <div className='field'>
-              <label htmlFor='credit-card-code'>Código de Segurança (CVV)</label>
-              <input
-                type='text'
-                name='credit-card-code'
-                id='credit-card-code'
-                autoComplete='cc-csc'
+              <label htmlFor='creditCardSecurityCode'>Código de Segurança (CVV)</label>
+              <Controller
+                name='creditCardSecurityCode'
+                control={control}
+                render={({ field }) => (
+                  <IMaskInput
+                    type='text'
+                    id='creditCardSecurityCode'
+                    mask={'0000'}
+                    {...field}
+                  />
+                )}
               />
+
+              {errors.creditCardSecurityCode && <p className='error'>{errors.creditCardSecurityCode.message}</p>}
             </div>
           </div>
           <PayOrder />
